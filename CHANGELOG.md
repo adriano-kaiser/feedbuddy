@@ -5,7 +5,7 @@ All notable changes to FeedBuddy are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.0.1] - 2026-10-13
 
 ### Changed
 - The dropdown has a solid background instead of the see-through popover material.
@@ -29,4 +29,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   release notes) no longer re-download the whole feed up to 10 times on every scroll to
   the bottom; they are recognized as having no older pages.
 
+[1.0.1]: https://github.com/adriano-kaiser/feedbuddy/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/adriano-kaiser/feedbuddy/releases/tag/v1.0.0
