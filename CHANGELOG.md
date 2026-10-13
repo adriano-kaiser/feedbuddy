@@ -5,6 +5,12 @@ All notable changes to FeedBuddy are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+- ⌘V (and ⌘C, ⌘X, ⌘A, ⌘Z) now work in text fields, e.g. pasting a feed URL when adding
+  or editing a feed. Before, only right-click > Paste worked.
+
 ## [1.0.1] - 2026-10-13
 
 ### Changed
