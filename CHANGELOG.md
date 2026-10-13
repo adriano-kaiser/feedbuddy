@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The dropdown has a solid background instead of the see-through popover material.
 - Hovering a post no longer shows its URL as a tooltip.
 
+### Fixed
+- Clicking anywhere outside the dropdown (another app, the desktop) now closes it.
+
 ## [1.0.0] - 2026-10-13
 
 ### Added

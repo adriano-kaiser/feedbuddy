@@ -4,13 +4,14 @@ import SwiftUI
 import UserNotifications
 
 @MainActor
-final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate, UNUserNotificationCenterDelegate {
     private let store = Store()
     private lazy var service = FeedService(store: store)
     private lazy var model = AppModel(store: store, service: service)
     private var statusItem: NSStatusItem!
     private let popover = NSPopover()
     private var cancellables: Set<AnyCancellable> = []
+    private var outsideClickMonitor: Any?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -27,6 +28,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
         popover.contentViewController = NSHostingController(rootView: RootView(app: model))
         popover.contentSize = RootView.size
         popover.behavior = .transient
+        popover.delegate = self
 
         store.$entries
             .map { $0.lazy.filter { !$0.read }.count }
@@ -69,8 +71,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
         guard let button = statusItem.button else { return }
         NSApp.activate()
         popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
+        popover.contentViewController?.view.window?.makeKey()
+        // A menu bar app often can't become active (macOS 14+ activation is cooperative),
+        // and then .transient never sees clicks elsewhere. Clicks in other apps arrive
+        // here instead; mouse events need no extra permission.
+        outsideClickMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown, .otherMouseDown]) { [weak self] _ in
+            MainActor.assumeIsolated { self?.popover.performClose(nil) }
+        }
         // Fresh check on open, like the extension did (skipped if one just ran).
         service.refreshOnOpen()
+    }
+
+    func popoverDidClose(_ notification: Notification) {
+        if let monitor = outsideClickMonitor {
+            NSEvent.removeMonitor(monitor)
+            outsideClickMonitor = nil
+        }
     }
 
     // MARK: - notifications
