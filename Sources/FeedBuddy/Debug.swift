@@ -45,7 +45,7 @@ enum Debug {
 
         let window = NSWindow(contentRect: NSRect(origin: .zero, size: RootView.size), styleMask: [.borderless],
                               backing: .buffered, defer: false)
-        let host = NSHostingView(rootView: RootView(app: model).background(.windowBackground))
+        let host = NSHostingView(rootView: RootView(app: model))
         window.contentView = host
 
         let firstFeed = store.feeds.first?.id

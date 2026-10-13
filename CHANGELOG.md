@@ -5,6 +5,12 @@ All notable changes to FeedBuddy are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+- The dropdown has a solid background instead of the see-through popover material.
+- Hovering a post no longer shows its URL as a tooltip.
+
 ## [1.0.0] - 2026-10-13
 
 ### Added

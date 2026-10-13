@@ -18,6 +18,8 @@ struct RootView: View {
             }
         }
         .frame(width: Self.size.width, height: Self.size.height)
+        // Solid instead of the popover's default see-through material.
+        .background(Color(nsColor: .windowBackgroundColor).ignoresSafeArea())
     }
 }
 
@@ -292,7 +294,6 @@ struct EntryRow: View {
         .contentShape(Rectangle())
         .onHover { hover.isHovered = $0 }
         .onTapGesture { app.open(entry) }
-        .help(entry.link ?? "No link in this feed item")
         .contextMenu {
             Button("Open") { app.open(entry) }
             Button(entry.starred ? "Unstar" : "Star") { app.toggleStar(entry) }
